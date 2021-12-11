@@ -1,2 +1,3 @@
 # team-generator
-A simple generator to build a list of team members
+A simple generator that runs in the command line to build teams. 
+Runs in the command line and then generates an HTML file based on the input the user provides it. 
