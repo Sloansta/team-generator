@@ -1,7 +1,7 @@
 let inq = require('inquirer');
-let Manager = require('../lib/Manager');
-let Engineer = require('../lib/Engineer');
-let Intern = require('../lib/Intern');
+let Manager = require('./lib/Manager');
+let Engineer = require('./lib/Engineer');
+let Intern = require('./lib/Intern');
 
 let employeeArr = [];
 
@@ -32,8 +32,8 @@ inq.
         }
     ])
     .then(data => {
+        employeeArr.push(new Manager(data.manager, data.managerId, data.managerEmail, data.managerOfficeNum));
         confirmAddEmployee(addEmployee);
-        //console.log(data);
     }).catch(err => {
         if(err)
             console.error(err);
@@ -49,8 +49,10 @@ function confirmAddEmployee(func) {
     ]).then(answer => {
         if(answer.addEmployee)
             func();
-        else 
+        else { 
+            console.log(employeeArr);
             return false;
+        }
     });
 }
 
@@ -67,7 +69,7 @@ function addEmployee() {
             addEngineer();
         else if(data.typeOfEmployee[0] === 'Intern')
             addIntern();
-    })
+    });
 }
 
 function addEngineer() {
@@ -96,8 +98,9 @@ function addEngineer() {
             message: 'What is the engineers Github? |'
         }
     ]).then(data => {
+        employeeArr.push(new Engineer(data.engineerName, data.engineerId, data.engineerEmail, data.engineerGithub));
         confirmAddEmployee(addEmployee);
-    })
+    });
 }
 
 function addIntern() {
@@ -122,10 +125,11 @@ function addIntern() {
 
         {
             type: 'input',
-            name: 'engineerGithub',
+            name: 'internSchool',
             message: 'What is the interns school? |'
         }
     ]).then(data => {
+        employeeArr.push(new Intern(data.internName, data.internId, data.internEmail, data.internSchool));
         confirmAddEmployee(addEmployee);
-    })
+    });
 }
