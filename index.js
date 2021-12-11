@@ -2,6 +2,7 @@ let inq = require('inquirer');
 let Manager = require('./lib/Manager');
 let Engineer = require('./lib/Engineer');
 let Intern = require('./lib/Intern');
+const fs = require('fs');
 
 let employeeArr = [];
 
@@ -51,6 +52,9 @@ function confirmAddEmployee(func) {
             func();
         else { 
             console.log(employeeArr);
+            employeeArr.forEach(emp => {
+                writeHtmlFile(emp.generateHtml());
+            });
             return false;
         }
     });
@@ -131,5 +135,15 @@ function addIntern() {
     ]).then(data => {
         employeeArr.push(new Intern(data.internName, data.internId, data.internEmail, data.internSchool));
         confirmAddEmployee(addEmployee);
+    });
+}
+
+function writeHtmlFile(htmlData) {
+    fs.appendFile('index.html', htmlData, (err) => {
+        if(err)
+            console.error(err);
+        else 
+            return false;
+        console.log('Appended to html file')
     });
 }
