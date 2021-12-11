@@ -1,4 +1,9 @@
 let inq = require('inquirer');
+let Manager = require('../lib/Manager');
+let Engineer = require('../lib/Engineer');
+let Intern = require('../lib/Intern');
+
+let employeeArr = [];
 
 inq.
     prompt([
